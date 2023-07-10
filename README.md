@@ -1,34 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
 
-First, run the development server:
+- Fork and clone this repo
+- Do the test and commit as you are used to do
+- Send us the fork url so we can take a look !
+
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## Requirements 
 
-To learn more about Next.js, take a look at the following resources:
+- TypeScript and Tailwind must be used
+- The project is expected to have some UI/UX integration and best practices applied
+- You shouldn't need to add any library (except if you have a very good reason to do so)
+- Mock must not be changed
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The following features are expected to be in the technical assessment : 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Create an API endpoint /search to get the list of users (mock provided)
+- Display users
+- Add a searchbar to filter users
+- Update user name (without using api)
+- Add pagination (10 users per page)
+- Add alphabetical sort 
+- Loading state
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## If you want to go beyond
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+You can add any extra feature that you'd like but that's not required. 
+
