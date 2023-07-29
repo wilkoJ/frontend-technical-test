@@ -41,13 +41,12 @@ const UserTable = ({ users, search, currentPage, paginationSize }: IProps) => {
             );
           })
           .map((user: IUser, index: number) => {
-            console.log(index);
             if (
               index > currentPage * paginationSize - 1 &&
               index < currentPage * paginationSize + paginationSize
             )
               return (
-                <tr key={index} className="border border-slate-300 ...">
+                <tr key={index} className="border border-slate-300">
                   <td>
                     <ColumnCase value={user.email} />
                   </td>

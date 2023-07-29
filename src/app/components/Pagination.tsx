@@ -13,7 +13,7 @@ const Pagination = ({ length, current, onClick }: IProps) => {
       {arrayPagination.map((val: number, index: number) => {
         return (
           <div
-            className=" w-14 h-14   "
+            className="py-2 px-3 bg-indigo-500 text-white text-sm font-semibold rounded-md shadow focus:outline-none flex-initial w-14 "
             onClick={(e) => {
               console.log(e);
               onClick(index);

@@ -4,8 +4,24 @@ import UserTable from "./components/UserTable";
 import SearchBar from "./components/SearchBar";
 import IUser from "./model/IUser";
 import Pagination from "./components/Pagination";
+import Table, { ColumnDefinitionType } from "./components/Table";
 
 const App = () => {
+  const columns: ColumnDefinitionType<IUser, keyof IUser>[] = [
+    {
+      key: "name",
+      header: "Name",
+    },
+    {
+      key: "email",
+      header: "Email adress",
+    },
+    {
+      key: "type",
+      header: "type",
+    },
+  ];
+
   const paginationSize = 10;
   const [users, setUsers] = useState<IUser[]>([]);
   const [search, setSearch] = useState("");
@@ -21,19 +37,13 @@ const App = () => {
   }, []);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        flexFlow: "column",
-        alignItems: "center",
-      }}
-    >
+    <div className="flex flex-col items-center">
       <SearchBar
         onChange={(value: string) => {
           setSearch(value);
         }}
       />
+      {/* <Table data={users} columns={columns} /> */}
       <UserTable
         users={users}
         search={search}
