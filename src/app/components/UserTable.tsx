@@ -9,7 +9,12 @@ type IProps = {
   users: IUser[];
 };
 
-const UserLine = ({ users }: IProps) => {
+/**
+ * Component to display a table of users
+ * @param {IUser} users a list of users
+ **/
+
+const UserTable = ({ users }: IProps) => {
   return (
     <table className="md:table-fixed border-collapse  border border-slate-400">
       <thead>
@@ -40,4 +45,4 @@ const UserLine = ({ users }: IProps) => {
   );
 };
 
-export default UserLine;
+export default UserTable;
