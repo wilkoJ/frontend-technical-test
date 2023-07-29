@@ -10,7 +10,7 @@ type IProps = {
 
 const ColumnCase = ({ value }: IProps) => {
   return (
-    <div className="text-center p-8">
+    <div className="text-center p-4">
       <p>{value}</p>
     </div>
   );

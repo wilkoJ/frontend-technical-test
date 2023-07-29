@@ -2,10 +2,9 @@ import React, { useState } from "react";
 
 type IProps = {
   onChange: Function;
-  search: string;
 };
 
-const Search = ({ onChange, search }: IProps) => {
+const SearchBar = ({ onChange }: IProps) => {
   return (
     <label className="relative block">
       <span className="sr-only">Search</span>
@@ -31,4 +30,4 @@ const Search = ({ onChange, search }: IProps) => {
   );
 };
 
-export default Search;
+export default SearchBar;
