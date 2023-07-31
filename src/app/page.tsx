@@ -49,13 +49,15 @@ const App = () => {
 
   return (
     <div className="md:flex md:flex-col md:items-center bg-grey-500 p-4">
-      <SearchBar
-        onChange={(value: string) => {
-          setSearch(value);
-          setCurrentPage(0);
-        }}
-      />
-      <UserAddModal />
+      <div className="md:flex justify-between bg-grey-500 p-4">
+        <SearchBar
+          onChange={(value: string) => {
+            setSearch(value);
+            setCurrentPage(0);
+          }}
+        />
+        <UserAddModal />
+      </div>
       {/* <Table data={users} columns={columns} /> */}
       {loaded ? (
         <UserTable

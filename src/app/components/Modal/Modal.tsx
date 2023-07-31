@@ -12,7 +12,7 @@ const Modal = ({ title, onChange, buttonContent, children }: IProps) => {
   return (
     <>
       <div
-        className="cursor-pointer bg-indigo-500 text-white hover:bg-indigo-700 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+        className="cursor-pointer bg-indigo-500 text-white hover:bg-indigo-700 rounded shadow hover:shadow-lg outline-none focus:outline-none p-2 mr-1 mb-1 ease-linear transition-all duration-150"
         onClick={() => setShowModal(true)}
       >
         {buttonContent}
