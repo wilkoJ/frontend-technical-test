@@ -2,18 +2,19 @@ import React from "react";
 
 type IProps = {
   length: number;
+  paginationSize: number;
   current: number;
   onClick: Function;
 };
 
-const Pagination = ({ length, current, onClick }: IProps) => {
-  const arrayPagination = Array(length).fill(0);
+const Pagination = ({ length, paginationSize, current, onClick }: IProps) => {
+  const arrayPagination = Array(Math.ceil(length / paginationSize)).fill(0);
   return (
-    <div className="flex">
+    <div className="flex justify-between">
       {arrayPagination.map((val: number, index: number) => {
         return (
           <div
-            className="py-2 px-3 bg-indigo-500 text-white text-sm font-semibold rounded-md shadow focus:outline-none flex-initial w-14 "
+            className="bg-indigo-500 rounded-full h-12 w-12 flex items-center justify-center"
             onClick={(e) => {
               console.log(e);
               onClick(index);
@@ -24,6 +25,11 @@ const Pagination = ({ length, current, onClick }: IProps) => {
           </div>
         );
       })}
+      <div>
+        {`Results ${current * paginationSize} - ${
+          current * paginationSize + paginationSize
+        } of ${length} elements`}
+      </div>
     </div>
   );
 };

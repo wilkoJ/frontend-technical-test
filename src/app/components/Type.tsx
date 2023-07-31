@@ -12,7 +12,7 @@ type IProps = {
 
 const Type = ({ type }: IProps) => {
   return (
-    <div className="text-center  p-8">
+    <div className="text-center p-4">
       <p>{type}</p>
     </div>
   );
