@@ -7,6 +7,7 @@ import IUser from "../model/IUser";
 import Modal from "./Modal/Modal";
 
 import { useUsersContext } from "../store/store";
+import UserUpdateModal from "./Modal/UserUpdateModal";
 type IProps = {
   users: IUser[];
   search: string;
@@ -49,10 +50,10 @@ const UserTable = ({ users, search, currentPage, paginationSize }: IProps) => {
                   <Type type={user.type} />
                 </td>
                 <td>
-                  <Modal
+                  <UserUpdateModal
                     user={users[index]}
-                    onChange={(value: string) => {
-                      users[index].name = value;
+                    onChange={(newUser: IUser) => {
+                      users[index] = newUser;
                       setUsers(users);
                     }}
                   />

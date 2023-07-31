@@ -2,12 +2,11 @@ import IUser from "@/app/model/IUser";
 import React from "react";
 
 type IProps = {
-  user: IUser;
-  onChange: (value: string) => void;
+  onChange: () => void;
+  children: React.ReactNode;
 };
-const Modal = ({ user, onChange }: IProps) => {
+const Modal = ({ onChange, children }: IProps) => {
   const [showModal, setShowModal] = React.useState(false);
-  const [name, setName] = React.useState("");
   return (
     <>
       <button
@@ -36,17 +35,7 @@ const Modal = ({ user, onChange }: IProps) => {
                   </button>
                 </div>
                 {/*body*/}
-                <div className="relative p-6 flex-auto">
-                  <input
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setName(e.currentTarget.value);
-                    }}
-                    className="placeholder:italic placeholder:text-slate-400 block bg-white border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-                    placeholder="Update name"
-                    type="text"
-                    name="update"
-                  />
-                </div>
+                <div className="relative p-6 flex-auto">{children}</div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
@@ -60,7 +49,7 @@ const Modal = ({ user, onChange }: IProps) => {
                     className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => {
-                      onChange(name);
+                      onChange();
                       setShowModal(false);
                     }}
                   >
