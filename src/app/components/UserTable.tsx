@@ -5,6 +5,7 @@ import Type from "./Type";
 import IUser from "../model/IUser";
 
 import { useUsersContext } from "../store/store";
+import { AscendantSort, DescendantSort, DefaultSort } from "./assets/Icons";
 import UserUpdateModal from "./Modal/UserUpdateModal";
 import {
   ascendingSortByValue,
@@ -14,7 +15,6 @@ import {
 } from "../utils";
 
 type IProps = {
-  users: IUser[];
   search: string;
   currentPage: number;
   paginationSize: number;
@@ -25,17 +25,24 @@ type SortObject = {
   index: number;
 };
 
+enum SortType {
+  None = 0,
+  Ascending = 1,
+  Descending = 2,
+}
+
 /**
  * Component to display a table of users
  * @param {IUser} users a list of users
  **/
-const UserTable = ({ users, search, currentPage, paginationSize }: IProps) => {
-  const { setUsers } = useUsersContext();
+const UserTable = ({ search, currentPage, paginationSize }: IProps) => {
+  const minPage = currentPage * paginationSize;
+  const maxPage = currentPage * paginationSize + paginationSize;
+  const { users, setUsers } = useUsersContext();
   const [sortObject, setSortObject] = useState<SortObject>({
     type: "name",
     index: 0,
   });
-
   const arrayOfSort: ((a: string, b: string) => 1 | -1)[] = [
     (a: string, b: string) => {
       return true ? 1 : -1;
@@ -48,8 +55,19 @@ const UserTable = ({ users, search, currentPage, paginationSize }: IProps) => {
       return sortObject.index + 1;
     if (sortObject.index === 0 && type != sortObject.type)
       return sortObject.index + 1;
-    return 0;
+    return SortType.None;
   };
+  const showSortIcon = () => {
+    switch (sortObject.index) {
+      case SortType.Ascending:
+        return <AscendantSort />;
+      case SortType.Descending:
+        return <DescendantSort />;
+      default:
+        return <DefaultSort />;
+    }
+  };
+
   return (
     <div className="relative overflow-x-auto p-4">
       <table className="sd:w-full md:table-fixed text-sm text-left text-gray-500 dark:text-gray-400 rounded shadow">
@@ -57,43 +75,47 @@ const UserTable = ({ users, search, currentPage, paginationSize }: IProps) => {
           <tr>
             <th
               scope="col"
-              className="px-6 py-3 font-light"
               onClick={() => {
                 setSortObject({
                   type: "email",
                   index: setIndex("email"),
                 });
-                console.log(sortObject);
               }}
             >
-              Email
+              <div>
+                Email
+                {sortObject.type === "email" ? showSortIcon() : <DefaultSort />}
+              </div>
             </th>
             <th
               scope="col"
-              className="px-6 py-3 font-light"
               onClick={() => {
                 setSortObject({
                   type: "name",
                   index: setIndex("name"),
                 });
-                console.log(sortObject);
               }}
             >
-              Name
+              <div>
+                Name
+                {sortObject.type === "name" ? showSortIcon() : <DefaultSort />}
+              </div>
             </th>
             <th
               scope="col"
-              className="px-6 py-3 font-light"
               onClick={() => {
                 setSortObject({
                   type: "type",
                   index: setIndex("type"),
                 });
-                console.log(sortObject);
               }}
             >
-              Type
+              <div>
+                Type
+                {sortObject.type === "type" ? showSortIcon() : <DefaultSort />}
+              </div>
             </th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -110,36 +132,39 @@ const UserTable = ({ users, search, currentPage, paginationSize }: IProps) => {
                 b[sortObject.type]
               );
             })
+            .slice(minPage, maxPage)
             .map((user: IUser, index: number) => {
-              if (
-                index > currentPage * paginationSize - 1 &&
-                index < currentPage * paginationSize + paginationSize
-              )
-                return (
-                  <tr
-                    key={index}
-                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                  >
-                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      {user.email}
-                    </td>
-                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      {user.name}
-                    </td>
-                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              return (
+                <tr
+                  key={index}
+                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                >
+                  <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <p>{user.email}</p>
+                  </td>
+                  <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <p>{user.name}</p>
+                  </td>
+                  <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <p>
                       <Type type={user.type} />
-                    </td>
-                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      <UserUpdateModal
-                        user={users[index]}
-                        onChange={(newUser: IUser) => {
-                          users[index] = newUser;
-                          setUsers(users);
-                        }}
-                      />
-                    </td>
-                  </tr>
-                );
+                    </p>
+                  </td>
+                  <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <UserUpdateModal
+                      user={users[index]}
+                      onChange={(newUser: IUser) => {
+                        setUsers((users) => {
+                          return users.map((user) => {
+                            if (user.id === newUser.id) return newUser;
+                            return user;
+                          });
+                        });
+                      }}
+                    />
+                  </td>
+                </tr>
+              );
             })}
         </tbody>
       </table>

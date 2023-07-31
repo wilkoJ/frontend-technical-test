@@ -1,84 +1,100 @@
 import React from "react";
 import { useUsersContext } from "../store/store";
+import { RightChevron, LeftChevron } from "./assets/Icons";
 type IProps = {
   length: number;
+  pagination_limit: number;
   paginationSize: number;
   current: number;
   onClick: Function;
 };
 
-const Pagination = ({ length, paginationSize, current, onClick }: IProps) => {
-  const { users, setUsers } = useUsersContext();
-  const arrayPagination = Array(Math.ceil(length / paginationSize)).fill(0);
+const paginate = (start: number, size: number, arr: number[]) => {
+  if (start >= arr.length) return [];
+  if (start + size >= arr.length) return arr.slice(-size);
+  return arr.slice(start, start + size);
+};
+
+const Pagination = ({
+  length,
+  pagination_limit = 5,
+  paginationSize,
+  current,
+  onClick,
+}: IProps) => {
+  const numberOfElem = current * paginationSize;
+
+  const numberOfElemRange = current * paginationSize + paginationSize;
+  const size = Math.ceil(length / paginationSize);
+  const arrayPagination = paginate(
+    current,
+    pagination_limit,
+    Array.from(Array(size).keys())
+  );
   return (
     <div className="flex flex-col">
       <div className="flex justify-center text-white">
         <button
-          className={`paginationButton bg-indigo-700 disabled:bg-indigo-400`}
+          className={`paginationButton`}
           disabled={!(current - 1 >= 0)}
           onClick={(e) => {
             onClick(current - 1);
           }}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 19.5L8.25 12l7.5-7.5"
-            />
-          </svg>
+          <LeftChevron />
         </button>
+        {current >= pagination_limit && pagination_limit > size ? (
+          <button
+            className={`paginationButton`}
+            onClick={(e) => {
+              onClick(0);
+            }}
+          >
+            1
+          </button>
+        ) : (
+          <></>
+        )}
         {arrayPagination.map((val: number, index: number) => {
           return (
             <button
-              className={`paginationButton bg-indigo-400 ${
-                current === index ? "bg-indigo-700" : ""
+              className={`paginationButton ${
+                current === val ? "bg-indigo-700 text-white" : ""
               }`}
               onClick={(e) => {
-                console.log(e);
-                onClick(index);
+                onClick(val);
               }}
               key={index}
             >
-              {index + 1}
+              {val + 1}
             </button>
           );
         })}
+
+        {current + 1 <= size - pagination_limit ? (
+          <button
+            className={`paginationButton`}
+            onClick={(e) => {
+              onClick(size - 1);
+            }}
+          >
+            {size}
+          </button>
+        ) : (
+          <></>
+        )}
         <button
-          className={`paginationButton bg-indigo-700 disabled:bg-indigo-400`}
-          disabled={!(current + 1 < arrayPagination.length)}
+          className={`paginationButton`}
+          disabled={!(current + 1 < size)}
           onClick={(e) => {
             onClick(current + 1);
           }}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M8.25 4.5l7.5 7.5-7.5 7.5"
-            />
-          </svg>
+          <RightChevron />
         </button>
       </div>
-
       <div className="flex  items-center justify-center">
-        {`Result ${current * paginationSize} - ${
-          current * paginationSize + paginationSize
-        } of ${length}`}
+        {`Result ${numberOfElem} - ${numberOfElemRange} of ${length}`}
       </div>
     </div>
   );

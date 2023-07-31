@@ -10,7 +10,7 @@ import { filterIncludeString } from "./utils";
 import { useUsersContext } from "./store/store";
 
 import Table, { ColumnDefinitionType } from "./components/genericTable/Table";
-import Loading from "./components/Loading";
+import { Loading } from "./components/assets/Icons";
 import UserAddModal from "./components/Modal/UserAddModal";
 
 const App = () => {
@@ -61,7 +61,6 @@ const App = () => {
       {/* <Table data={users} columns={columns} /> */}
       {loaded ? (
         <UserTable
-          users={users}
           search={search}
           currentPage={currentPage}
           paginationSize={paginationSize}
@@ -78,6 +77,7 @@ const App = () => {
             );
           }).length
         )}
+        pagination_limit={3}
         paginationSize={paginationSize}
         current={currentPage}
         onClick={(value: number) => {
