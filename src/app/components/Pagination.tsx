@@ -73,9 +73,9 @@ const Pagination = ({ length, paginationSize, current, onClick }: IProps) => {
       </div>
 
       <div className="flex  items-center justify-center">
-        {`Results ${current * paginationSize} - ${
+        {`${current * paginationSize} - ${
           current * paginationSize + paginationSize
-        } of ${length} elements`}
+        } of ${length}`}
       </div>
     </div>
   );

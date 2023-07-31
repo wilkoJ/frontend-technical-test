@@ -1,7 +1,4 @@
-"use client";
-import React, { useState, useEffect } from "react";
-
-import ColumnCase from "./ColumnCase";
+import React from "react";
 import Type from "./Type";
 import IUser from "../model/IUser";
 import Modal from "./Modal/Modal";
