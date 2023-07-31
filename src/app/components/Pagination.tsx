@@ -1,5 +1,5 @@
 import React from "react";
-
+import { useUsersContext } from "../store/store";
 type IProps = {
   length: number;
   paginationSize: number;
@@ -8,14 +8,16 @@ type IProps = {
 };
 
 const Pagination = ({ length, paginationSize, current, onClick }: IProps) => {
+  const { users, setUsers } = useUsersContext();
   const arrayPagination = Array(Math.ceil(length / paginationSize)).fill(0);
   return (
     <div className="flex flex-col">
       <div className="flex justify-center text-white">
         <button
-          className={`paginationButton bg-indigo-700`}
+          className={`paginationButton bg-indigo-700 disabled:bg-indigo-400`}
+          disabled={!(current - 1 >= 0)}
           onClick={(e) => {
-            if (current - 1 >= 0) onClick(current - 1);
+            onClick(current - 1);
           }}
         >
           <svg
@@ -45,14 +47,15 @@ const Pagination = ({ length, paginationSize, current, onClick }: IProps) => {
               }}
               key={index}
             >
-              {index}
+              {index + 1}
             </button>
           );
         })}
         <button
-          className={`paginationButton bg-indigo-700`}
+          className={`paginationButton bg-indigo-700 disabled:bg-indigo-400`}
+          disabled={!(current + 1 < arrayPagination.length)}
           onClick={(e) => {
-            if (current + 1 < arrayPagination.length) onClick(current + 1);
+            onClick(current + 1);
           }}
         >
           <svg
