@@ -10,10 +10,10 @@ type IProps = {
 const Pagination = ({ length, paginationSize, current, onClick }: IProps) => {
   const arrayPagination = Array(Math.ceil(length / paginationSize)).fill(0);
   return (
-    <div className="flex align-center">
-      <div className="flex justify center text-white">
+    <div className="flex flex-col">
+      <div className="flex justify-center text-white">
         <button
-          className={`bg-indigo-500 rounded-full h-8 w-8 flex items-center justify-center `}
+          className={`paginationButton bg-indigo-700`}
           onClick={(e) => {
             if (current - 1 >= 0) onClick(current - 1);
           }}
@@ -36,8 +36,8 @@ const Pagination = ({ length, paginationSize, current, onClick }: IProps) => {
         {arrayPagination.map((val: number, index: number) => {
           return (
             <button
-              className={`bg-indigo-500 rounded-full h-8 w-8 flex items-center justify-center ${
-                current === index ? "bg-pink-500" : ""
+              className={`paginationButton bg-indigo-400 ${
+                current === index ? "bg-indigo-700" : ""
               }`}
               onClick={(e) => {
                 console.log(e);
@@ -50,7 +50,7 @@ const Pagination = ({ length, paginationSize, current, onClick }: IProps) => {
           );
         })}
         <button
-          className={`bg-indigo-500 rounded-full h-8 w-8 flex items-center justify-center `}
+          className={`paginationButton bg-indigo-700`}
           onClick={(e) => {
             if (current + 1 < arrayPagination.length) onClick(current + 1);
           }}
@@ -73,7 +73,7 @@ const Pagination = ({ length, paginationSize, current, onClick }: IProps) => {
       </div>
 
       <div className="flex  items-center justify-center">
-        {`${current * paginationSize} - ${
+        {`Result ${current * paginationSize} - ${
           current * paginationSize + paginationSize
         } of ${length}`}
       </div>

@@ -12,4 +12,7 @@
   .staff {
     @apply bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300;
   }
+  .paginationButton {
+    @apply rounded-full h-8 w-8 flex items-center justify-center;
+  }
 }

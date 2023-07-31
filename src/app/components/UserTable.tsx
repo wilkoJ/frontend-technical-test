@@ -21,7 +21,7 @@ const UserTable = ({ users, search, currentPage, paginationSize }: IProps) => {
   const { setUsers } = useUsersContext();
 
   return (
-    <div className="relative overflow-x-auto">
+    <div className="relative overflow-x-auto p-4">
       <table className="sd:w-full md:table-fixed text-sm text-left text-gray-500 dark:text-gray-400 rounded shadow">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
