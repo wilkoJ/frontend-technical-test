@@ -44,7 +44,7 @@ const App = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="md:flex md:flex-col md:items-center bg-grey-500 p-4">
       <SearchBar
         onChange={(value: string) => {
           setSearch(value);

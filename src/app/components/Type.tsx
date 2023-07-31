@@ -12,8 +12,10 @@ type IProps = {
 
 const Type = ({ type }: IProps) => {
   return (
-    <div className="text-center p-4">
-      <p>{type}</p>
+    <div className={`text-center md:p-4 `}>
+      <p className={` text-xs font-medium mr-2 px-2.5 py-0.5 rounded ${type}`}>
+        {type}
+      </p>
     </div>
   );
 };
