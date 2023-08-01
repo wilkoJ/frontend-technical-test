@@ -7,6 +7,7 @@ import IUser from "../model/IUser";
 import { useUsersContext } from "../store/store";
 import { AscendantSort, DescendantSort, DefaultSort } from "./assets/Icons";
 import UserUpdateModal from "./Modal/UserUpdateModal";
+import { useSearchParams } from "next/navigation";
 import {
   ascendingSortByValue,
   descendingSortByValue,
@@ -16,8 +17,6 @@ import {
 
 type IProps = {
   search: string;
-  currentPage: number;
-  paginationSize: number;
 };
 
 type SortObject = {
@@ -35,9 +34,13 @@ enum SortType {
  * Component to display a table of users
  * @param {IUser} users a list of users
  **/
-const UserTable = ({ search, currentPage, paginationSize }: IProps) => {
-  const minPage = currentPage * paginationSize;
-  const maxPage = currentPage * paginationSize + paginationSize;
+const UserTable = ({ search }: IProps) => {
+  const searchParams = useSearchParams();
+
+  const page = Number(searchParams.get("page") ?? "1") - 1;
+  const per_page = Number(searchParams.get("per_page") ?? "10");
+  const minPage = page * per_page;
+  const maxPage = page * per_page + per_page;
   const { users, setUsers } = useUsersContext();
   const [sortObject, setSortObject] = useState<SortObject>({
     type: "name",

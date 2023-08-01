@@ -5,6 +5,8 @@ import SearchBar from "./components/SearchBar";
 import IUser from "./model/IUser";
 import Pagination from "./components/Pagination";
 
+import { useRouter } from "next/navigation";
+
 import { filterIncludeString } from "./utils";
 
 import { useUsersContext } from "./store/store";
@@ -13,8 +15,14 @@ import Table, { ColumnDefinitionType } from "./components/genericTable/Table";
 import { Loading } from "./components/assets/Icons";
 import UserAddModal from "./components/Modal/UserAddModal";
 
-const App = () => {
+const App = ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) => {
   // To use the generic table;
+
+  const router = useRouter();
   // const columns: ColumnDefinitionType<IUser, keyof IUser>[] = [
   //   {
   //     key: "name",
@@ -29,12 +37,11 @@ const App = () => {
   //     header: "type",
   //   },
   // ];
-
+  const page = Number(searchParams["page"] ?? "1");
+  const per_page = Number(searchParams["per_page"] ?? "10");
   const { users, setUsers } = useUsersContext();
   const [search, setSearch] = useState("");
   const [loaded, setLoaded] = useState(false);
-  const [currentPage, setCurrentPage] = useState(0);
-  const paginationSize = 10;
 
   const fetchData = async () => {
     const res = await fetch("/search");
@@ -53,21 +60,13 @@ const App = () => {
         <SearchBar
           onChange={(value: string) => {
             setSearch(value);
-            setCurrentPage(0);
+            router.push(`/?page=${1}&per_page=${per_page}`);
           }}
         />
         <UserAddModal />
       </div>
       {/* <Table data={users} columns={columns} /> */}
-      {loaded ? (
-        <UserTable
-          search={search}
-          currentPage={currentPage}
-          paginationSize={paginationSize}
-        />
-      ) : (
-        <Loading />
-      )}
+      {loaded ? <UserTable search={search} /> : <Loading />}
       <Pagination
         length={Math.ceil(
           users.filter((user) => {
@@ -78,11 +77,6 @@ const App = () => {
           }).length
         )}
         pagination_limit={3}
-        paginationSize={paginationSize}
-        current={currentPage}
-        onClick={(value: number) => {
-          setCurrentPage(value);
-        }}
       />
     </div>
   );
